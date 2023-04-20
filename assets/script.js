@@ -27,9 +27,7 @@ function artistSearch(e) {
     var searchedArtist = document.getElementById("artist-search-input").value;
     var url = `https://api.musixmatch.com/ws/1.1/artist.search?q_artist=${searchedArtist}&apikey=3b7e9248b894731f9f881e9b297fd717`;
 
-    fetch(url, {
-        mode: "no-cors"
-    })
+    fetch(url)
     .then(response => response.json())
     .then(function (data) {
             console.log(data);
