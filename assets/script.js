@@ -45,16 +45,16 @@ function artistSearch(e) {
         console.log(currentArtistID);
 
         fetch(`https://api.musixmatch.com/ws/1.1/artist.albums.get?artist_id=${currentArtistID}&apikey=3b7e9248b894731f9f881e9b297fd717`)
-        .then(responseTwo => responseTwo.json())
-        .then(function(albumdata){
-            console.log(albumdata)
+            .then(responseTwo => responseTwo.json())
+            .then(function(albumdata){
+                console.log(albumdata)
 
-            for (let i = 0; i < albumdata.message.body.album_list.length; i++) {
-                var albumName = albumdata.message.body.album_list[i].album.album_name;
+                for (let i = 0; i < albumdata.message.body.album_list.length; i++) {
+                    var albumName = albumdata.message.body.album_list[i].album.album_name;
                 
-                var artistList = document.createElement('li');
-                artistList;
-                artistList.textContent = albumName;
+                    var artistList = document.createElement('li');
+                    artistList.textContent = albumName;
+                    document.querySelector("#artist-list").append(artistList)
 
             }
         })
