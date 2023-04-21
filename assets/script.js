@@ -20,6 +20,8 @@
 
 // var searchBtn = document.getElementById("search-button");
 // searchBtn.addEventListener("click", search);
+
+//Declaring our variables and their locations
 var artistHeader = document.querySelector("#artist-header")
 var artistParagraph = document.querySelector("#artist-paragraph")
 var artistList = document.querySelector("#artist-list")
@@ -30,6 +32,7 @@ var lyricHeader = document.querySelector("#lyric-header")
 var lyricParagraph = document.querySelector("#lyric-paragraph")
 var lyricList = document.querySelector("#lyric-list")
 
+//This is for the artist search
 function artistSearch(e) {
     e.preventDefault();
     var searchedArtist = document.getElementById("artist-search-input").value;
