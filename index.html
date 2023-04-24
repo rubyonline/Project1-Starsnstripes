@@ -9,12 +9,12 @@
   <title>Discography & Lyrics</title>
 </head>
   
-<body class="h-screen">
-  <header cLass="font-bold text-5xl text-black flex justify-center p-3 my-5 bg-indigo-500 bg-no-repeat bg-center" style="background-image: url('/assets/images/giphy.gif');">Discography & Lyrics</header>
-  <section class="h-full">
+<body class="h-screen ld:flex">
+  <header cLass="font-bold text-5xl text-black flex justify-center p-3 my-5 bg-indigo-500 bg-no-repeat bg-center md:flex-shrink-0 " style="background-image: url('/assets/images/giphy.gif');">Discography & Lyrics</header>
+  <section class="h-screen">
     <figure class="gap-8 columns-2 h-screen">
 
-    <figure class="gap-8 columns-2 h-4/5 flex justify-center" style="background-image: url('/assets/images/musical-background-2842924__340.jpg');">
+    <figure class="gap-8 columns-2 h-full flex justify-center " style="background-image: url('/assets/images/musical-background-2842924__340.jpg');">
     <form class="p-9">
       <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
       <div class="relative">
@@ -24,12 +24,12 @@
         <input type="search" id="artist-search-input" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Artist" required>
         <button id="artist-search-button" type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
       </div>
-      <header id="artist-header"> </header>
-      <p id="artist-paragraph"></p>
-      <li id="artist-list"></li>
+      <header class="text-5xl font-bold text-white" id="artist-header"> </header>
+      <p class="text-lg" id="artist-paragraph"></p>
+      <li class="text-white text-bold text-4xl" id="artist-list"></li>
     </form>
     </figure>
-    <figure class="gap-8 columns-2 h-4/5 flex justify-center" style="background-image: url('/assets/images/seamless-vector-music-notes-symbols-design-pattern-T12K8M.jpg');">
+    <figure class="gap-8 columns-2 h-full flex justify-center" style="background-image: url('/assets/images/seamless-vector-music-notes-symbols-design-pattern-T12K8M.jpg');">
     <form class="p-9" >   
       <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
       <div class="relative">
@@ -41,11 +41,12 @@
       </div>
       <header id="lyric-header"> </header>
         <p id="lyric-paragraph"></p>
-          <li id="lyric-list"></li>
+          <li class="text-red-900 text-bold text-3xl" id="lyric-list"></li>
     </form>
     </figure>
     </figure>
-  </section>    
+  </section>
+  <footer cLass="font-bold text-5xl text-black flex justify-center p-3 my-5 bg-indigo-500 bg-no-repeat bg-center" style="background-image: url('/assets/images/giphy.gif');">Discography & Lyrics</footer>    
       <script src="./assets/script.js"></script>
   </body>
 </html>
