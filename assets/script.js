@@ -1,27 +1,4 @@
-
-// function search() {
-//     var lyrics = document.getElementById("lyrics-input").value;
-//     var apiKey = "3b7e9248b894731f9f881e9b297fd717";
-//     var encodedLyrics = encodeURIComponent(lyrics);
-//     var url = `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?format=jsonp&callback=callback&q_track=${encodeURIComponent(lyrics)}&apikey=${apiKey}`;
-// }
-
-// fetch(url)
-//     .then(response => response.json())
-//     .then(data => {
-//         var song = data.message.body.track;
-//         var songTitle = data.message.body.track;
-//         var artistName = song.artist_name;
-//         var albumName = song.album_name;
-//         var output = document.getElementById("output");
-//         output.innerHTML = `<p><strong>${songTitle}</strong> by ${artistName} (from the album ${albumName})</p>`;
-//     })
-//     .catch(error => console.error(error));
-
-// var searchBtn = document.getElementById("search-button");
-// searchBtn.addEventListener("click", search);
-
-//Declaring our variables and their locations
+//Adding our variables and their locations
 var artistHeader = document.querySelector("#artist-header")
 var artistParagraph = document.querySelector("#artist-paragraph")
 var artistList = document.querySelector("#artist-list")
@@ -32,35 +9,45 @@ var lyricHeader = document.querySelector("#lyric-header")
 var lyricParagraph = document.querySelector("#lyric-paragraph")
 var lyricList = document.querySelector("#lyric-list")
 
-//This is for the artist search
 function artistSearch(e) {
+    //prevents page from reloading
     e.preventDefault();
+    //Declaring our variables specific to this funciton
     var searchedArtist = document.getElementById("artist-search-input").value;
     var url = `https://api.musixmatch.com/ws/1.1/artist.search?q_artist=${searchedArtist}&apikey=3b7e9248b894731f9f881e9b297fd717`;
-  
+    
+    //Retrieve the data from the api URL about the closest artist's name
     fetch(url)
       .then(response => response.json())
       .then(function (data) {
+
+        //Logs the data in the console
         console.log(data);
         artistHeader.textContent = data.message.body.artist_list[0].artist.artist_name;
 
         var currentArtistID = data.message.body.artist_list[0].artist.artist_id;
         console.log(currentArtistID);
 
-        fetch(`https://api.musixmatch.com/ws/1.1/artist.albums.get?artist_id=${currentArtistID}&apikey=3b7e9248b894731f9f881e9b297fd717`)
-            .then(responseTwo => responseTwo.json())
-            .then(function(albumdata){
-                console.log(albumdata)
+        //Stores last searched item to localstorage
+        localStorage.setItem("leftSearch", searchedArtist);
 
-                for (let i = 0; i < albumdata.message.body.album_list.length; i++) {
-                    var albumName = albumdata.message.body.album_list[i].album.album_name;
+        //Retrieve the data from the api URL about the artist's albums
+        fetch(`https://api.musixmatch.com/ws/1.1/artist.albums.get?artist_id=${currentArtistID}&apikey=3b7e9248b894731f9f881e9b297fd717`)
+        .then(responseTwo => responseTwo.json())
+        .then(function(albumdata){
+            console.log(albumdata)
+
+            for (let i = 0; i < albumdata.message.body.album_list.length; i++) {
+                var albumName = albumdata.message.body.album_list[i].album.album_name;
                 
-                    var artistList = document.createElement('li');
-                    artistList.textContent = albumName;
-                    document.querySelector("#artist-list").append(artistList)
+                var artistList = document.createElement('li');
+                artistList;
+                artistList.textContent = albumName;
 
             }
         })
+
+        //Catches any errors and displays them to the console
         .catch(error => console.error(error));
       })
       .catch(error => console.error(error));
@@ -71,17 +58,45 @@ var artistSearchButton = document.getElementById("artist-search-button");
 artistSearchButton.addEventListener("click", artistSearch);
 
 
+//This funciton provides us with the lyrics to a song by searching the song name
 function lyricSearch(e) {
+    //Prevents page from reloading
     e.preventDefault();
+    //Declaring our variables specific to this function
     var searchedLyric = document.getElementById("lyric-search-input").value;
-    var url = `https://api.musixmatch.com/ws/1.1/track.search?q_lyrics=${searchedLyric}&apikey=3b7e9248b894731f9f881e9b297fd717`;
+    var url =  `https://api.vagalume.com.br/search.excerpt?apikey=4d665e0336c25ed3b44dd8d92055b33d&q=${searchedLyric}&limit=5`;
 
+    //Retrieve data from api url
     fetch(url)
         .then(response => response.json())
         .then(function (data) {
-            console.log(data);
-        });
-}
 
-var lyricSearchButton = document.getElementById("lyric-search-button");
-lyricSearchButton.addEventListener("click", lyricSearch);
+            //Logs data in the console
+            console.log(data);
+            var currentSongID = data.response.docs[0].id;
+
+            //Stores last searched item to localstorage
+            localStorage.setItem("rightSearch", searchedLyric);
+
+            //Retrieve data regarding lyric text
+            fetch(`https://api.vagalume.com.br/search.php?apikey=4d665e0336c25ed3b44dd8d92055b33d&musid=${currentSongID}`)
+            .then(responseTwo => responseTwo.json())
+            .then(function (lyricData){
+
+                //Logs data to console
+                console.log(lyricData)
+
+                //Prints to page
+                var lyrics = lyricData.mus[0].text;
+                var lyricPrint = document.createElement('p');
+
+                lyricPrint.textContent = lyrics;
+                document.querySelector("#lyric-list").append(lyricPrint);
+
+            })
+
+
+        });
+ }
+ var lyricSearchButton = document.getElementById("lyric-search-button");
+ lyricSearchButton.addEventListener("click", lyricSearch);
