@@ -9,6 +9,7 @@ var lyricHeader = document.querySelector("#lyric-header")
 var lyricParagraph = document.querySelector("#lyric-paragraph")
 var lyricList = document.querySelector("#lyric-list")
 
+//This function will provide us with the artist and all of their albums
 function artistSearch(e) {
     //prevents page from reloading
     e.preventDefault();
@@ -35,14 +36,17 @@ function artistSearch(e) {
         fetch(`https://api.musixmatch.com/ws/1.1/artist.albums.get?artist_id=${currentArtistID}&apikey=3b7e9248b894731f9f881e9b297fd717`)
         .then(responseTwo => responseTwo.json())
         .then(function(albumdata){
+
+            //Logs the data in the console
             console.log(albumdata)
 
+            //Makes a list item for each album in an artist's portfolio
             for (let i = 0; i < albumdata.message.body.album_list.length; i++) {
                 var albumName = albumdata.message.body.album_list[i].album.album_name;
                 
                 var artistList = document.createElement('li');
-                artistList;
                 artistList.textContent = albumName;
+                document.querySelector("#artist-list").append(artistList)
 
             }
         })
